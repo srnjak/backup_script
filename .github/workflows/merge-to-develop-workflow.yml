@@ -6,8 +6,8 @@ env:
 
 on:
   workflow_dispatch:
-  workflow_caller:
-    workflows: [ "release" ]
+  workflow_run:
+    workflows: [ "Release workflow" ]
     types:
       - completed
 

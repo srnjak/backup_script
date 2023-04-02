@@ -17,7 +17,6 @@ on:
 
 jobs:
   release-job:
-    id: release
     runs-on: ubuntu-latest
     container:
       image: srnjak/debian-package-builder:latest
