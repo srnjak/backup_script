@@ -14,6 +14,10 @@ on:
     branches:
       - master
   workflow_dispatch:
+  workflow_run:
+    workflows: [ "Merge develop into master" ]
+    types:
+      - completed
 
 jobs:
   release-job:
