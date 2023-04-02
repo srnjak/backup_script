@@ -1,5 +1,5 @@
 Package: file-backup-script
-Version: 1.0.3~prev2
+Version: 1.0.4~prev1
 Architecture: all
 Maintainer: Grega Krajnc <grega.dev@srnjak.com>
 Description: A bash script for creating backups of files specified in a configuration file.
