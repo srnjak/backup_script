@@ -1,6 +1,6 @@
 # File Backup Script
 
-This is a bash script for creating backups of files specified in a configuration file.
+A bash script for creating backups of files specified in a configuration file.
 
 ## Usage
 
