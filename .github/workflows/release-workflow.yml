@@ -1,0 +1,67 @@
+name: Release workflow
+
+env:
+  PACKAGE_NAME: file-backup-script
+  GIT_COMMITTER_EMAIL: bot@srnjak.com
+  GIT_COMMITTER_NAME: Srnjak bot
+
+defaults:
+  run:
+    shell: bash -eo pipefail {0}
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  release-job:
+    runs-on: ubuntu-latest
+    container:
+      image: srnjak/debian-package-builder:latest
+    steps:
+      - name: Set up Git identity
+        run: |
+          git config --global user.email "${{ env.GIT_COMMITTER_EMAIL }}"
+          git config --global user.name "${{ env.GIT_COMMITTER_NAME }}"
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - name: Set up version
+        run: |
+          VERSION=$(version-updater.sh $(pwd) --release)
+          git add .
+          git commit -m "Release of version $VERSION"
+          git tag "v$VERSION"
+      - name: Prepare
+        run: |
+          builder.sh clean
+          builder.sh prepare -n "${{ env.PACKAGE_NAME }}"
+      - name: Package
+        run: |
+          builder.sh package -n "${{ env.PACKAGE_NAME }}"
+      - name: Deploy
+        run: |
+          builder.sh deploy \
+            -u "${{ vars.REPOSITORY_USERNAME }}" \
+            -p "${{ secrets.REPOSITORY_PASSWORD }}" \
+            -r "${{ vars.REPOSITORY_URL }}" \
+            -n "${{ env.PACKAGE_NAME }}"
+      - name: Merge to develop branch and create preview version
+        run: |
+          git fetch origin
+          git checkout develop
+          git merge --no-ff master -m "Merge branch 'master' into develop"
+          git push origin develop --tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+      - name: Upload release artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Release
+          path: target/${{ env.PACKAGE_NAME }}.deb
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}

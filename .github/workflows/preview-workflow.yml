@@ -1,0 +1,74 @@
+name: Preview workflow
+
+env:
+  PACKAGE_NAME: file-backup-script
+  GIT_COMMITTER_EMAIL: bot@srnjak.com
+  GIT_COMMITTER_NAME: Srnjak bot
+
+defaults:
+  run:
+    shell: bash -eo pipefail {0}
+
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+
+jobs:
+  preview-job:
+    if: >
+      !contains(github.event.head_commit.message, 'Release of version')
+      && github.event.head_commit.message != 'Merge branch ''master'' into develop'
+    runs-on: ubuntu-latest
+    container:
+      image: srnjak/debian-package-builder:latest
+      env:
+        GIT_SSH_VARIANT: ssh
+    steps:
+      - name: Set up Git identity
+        run: |
+          git config --global user.email "${{ env.GIT_COMMITTER_EMAIL }}"
+          git config --global user.name "${{ env.GIT_COMMITTER_NAME }}"
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - name: Set up version
+        id: version_step
+        run: |
+          VERSION=$(version-updater.sh $(pwd) --new-preview)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+      - name: Prepare
+        run: |
+          builder.sh clean
+          builder.sh prepare -n "${{ env.PACKAGE_NAME }}"
+      - name: Package
+        run: |
+          builder.sh package -n "${{ env.PACKAGE_NAME }}"
+      - name: Deploy
+        run: |
+          builder.sh deploy \
+            -u "${{ vars.REPOSITORY_PREVIEW_USERNAME }}" \
+            -p "${{ secrets.REPOSITORY_PREVIEW_PASSWORD }}" \
+            -r "${{ vars.REPOSITORY_PREVIEW_URL }}" \
+            -n "${{ env.PACKAGE_NAME }}"
+      - name: Commit and tag release changes
+        run: |
+          VERSION=${{ steps.version_step.outputs.version }}
+          git add .
+          git commit -m "Release of version $VERSION"
+          TAG_NAME="v${VERSION//\~/-}"
+          git tag "$TAG_NAME"  
+          git push origin develop
+          if ! git push origin --force "$TAG_NAME"; then
+            echo "Tag $TAG_NAME already exists."
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+      - name: Upload release artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Preview
+          path: target/${{ env.PACKAGE_NAME }}.deb
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
