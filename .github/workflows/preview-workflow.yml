@@ -16,7 +16,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  release-job:
+  preview-job:
     if: >
       !contains(github.event.head_commit.message, 'Release of version')
       && github.event.head_commit.message != 'Merge branch ''master'' into develop'
@@ -71,4 +71,4 @@ jobs:
           name: Preview
           path: target/${{ env.PACKAGE_NAME }}.deb
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}

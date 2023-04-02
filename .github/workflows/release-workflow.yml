@@ -64,4 +64,4 @@ jobs:
           name: Release
           path: target/${{ env.PACKAGE_NAME }}.deb
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
