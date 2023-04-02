@@ -36,6 +36,8 @@ jobs:
           git config --global user.name "${{ env.GIT_COMMITTER_NAME }}"
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          ref: develop
       - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - name: Set up version
         id: version_step
