@@ -1,0 +1,17 @@
+#!/bin/sh
+set -e
+
+config_dir="/etc/files-backup"
+
+if [ "$1" = "install" ]; then
+
+  # Create /etc/files-backup directory if it doesn't already exist
+  if [ ! -d "$config_dir" ]; then
+    mkdir -p $config_dir
+    chown root:root $config_dir
+    chmod 755 $config_dir
+  fi
+fi
+
+# Continue with package installation
+exit 0
