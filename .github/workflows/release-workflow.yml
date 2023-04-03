@@ -1,7 +1,7 @@
 name: Release workflow
 
 env:
-  PACKAGE_NAME: file-backup-script
+  PACKAGE_NAME: files-backup
   GIT_COMMITTER_EMAIL: bot@srnjak.com
   GIT_COMMITTER_NAME: Srnjak bot
 
