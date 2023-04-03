@@ -6,8 +6,8 @@ A bash script for creating backups of files specified in a configuration file.
 
 Syntax:
 
-    ./backup.sh [-c CONFIG_DIR][-r RETENTION_POLICY] CONF_NAME
-    ./backup.sh -h
+    ./files-backup [-c CONFIG_DIR][-r RETENTION_POLICY] CONF_NAME
+    ./files-backup -h
 
 * `CONF_NAME` - the name of the configuration file to be used for the backup. 
 This file should be located in the directory specified by `-c` option.
