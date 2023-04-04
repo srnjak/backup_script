@@ -2,6 +2,7 @@
 
 # Initialize variables with default values
 CONFIG_DIR=/etc/files-backup
+SEND_MAIL=false
 
 printHelp() {
   cat <<EOF
@@ -12,16 +13,19 @@ printHelp() {
 
   OPTIONS:
     -c, --config-dir DIR     Set the directory containing the configuration files (default: /etc/files-backup)
-    -r, --retention POLICY   Retention policy type. Possible values: daily, weekly, monthly, yearly. If set, the value will be used as a suffix in the subdirectory name.
-    -h, --help                  Print this help message and exit.
+    -r, --retention POLICY   Retention policy type. Possible values: daily, weekly, monthly, yearly.
+                             If set, the value will be used as a suffix in the subdirectory name.
+    -m, --send-mail          Send an email notification after the backup is complete.
+                             If this flag is set, make sure to set the email address in the configuration file.
+    -h, --help               Print this help message and exit.
 
   CONF_NAME:
     The name of the configuration file to use. This file should be located in the directory specified by the -c option.
 
   EXAMPLES:
-    $0 my_config    Create a backup using the configuration file my_config.cfg located in /etc/files-backup.
+    $0 my_config                        Create a backup using the configuration file my_config.cfg located in /etc/files-backup.
     $0 -c /path/to/configs my_config    Create a backup using the configuration file my_config.cfg located in /path/to/configs.
-    $0 -r weekly my_config       Create a backup using the configuration file my_config.cfg located in /etc/files-backup, and append 'weekly' to the backup directory name.
+    $0 -m -r weekly my_config           Create a backup using the configuration file my_config.cfg located in /etc/files-backup, append 'weekly' to the backup directory name, and send an email notification after the backup is complete.
 
 EOF
 }
@@ -55,6 +59,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     -r|--retention)
         RETENTION_POLICY="$2"
+        shift
+        ;;
+    -m|--send-mail)
+        SEND_MAIL=true
         shift
         ;;
     -h|--help)
@@ -99,9 +107,12 @@ if [ -f $FILE ]; then
 fi
 
 checkVariable ROOT
-checkVariable EMAILTO
 checkVariable BACKUP_PREFIX
 checkVariable DIR
+
+if [[ "$SEND_MAIL" == true ]]; then
+  checkVariable EMAILTO
+fi
 
 # DATE format
 DATE=$(date +'%F %X')
@@ -179,7 +190,10 @@ write "*********************************"
 HOST=$(hostname)
 SUMMARY="Backup $CONF_NAME ($HOST); size: $SIZE"
 
-sed -i "1s/^/Subject: $SUMMARY\n/" $LOG_FILE
-sendmail "$EMAILTO" < $LOG_FILE
+if [[ "$SEND_MAIL" == true ]]; then
+  # sending mail
+  sed -i "1s/^/Subject: $SUMMARY\n/" $LOG_FILE
+  sendmail "$EMAILTO" < $LOG_FILE
+fi
 
 rm $LOG_FILE
