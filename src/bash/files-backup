@@ -112,6 +112,12 @@ checkVariable DIR
 
 if [[ "$SEND_MAIL" == true ]]; then
   checkVariable EMAILTO
+
+  # Check if sendmail is installed
+  if ! which sendmail > /dev/null; then
+    echo "Error: sendmail is not installed on this system."
+    exit 1
+  fi
 fi
 
 # DATE format
