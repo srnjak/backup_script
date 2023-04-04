@@ -2,4 +2,5 @@ Package: {{package}}
 Version: {{version}}
 Architecture: all
 Maintainer: {{maintainer}}
+Depends: tar, bzip2, sendmail
 Description: {{description}}
