@@ -14,12 +14,12 @@ This file should be located in the directory specified by `-c` option.
 
 ### Options
 
-| Option               | Description                                                                                                                                  | Default Value       |
-|----------------------|----------------------------------------------------------------------------------------------------------------------------------------------|---------------------|
-| `-c`, `--config-dir` | Directory containing configuration files                                                                                                     | `/etc/files-backup` |
-| `-r`, `--retention`  | Retention policy type. Possible values: daily, weekly, monthly, yearly. If set, the value will be used as a suffix in the subdirectory name. | `<empty>`           |
-| `-m`, `--send-mail`  | Send an email notification after the backup is complete. If this flag is set, make sure to set the email address in the configuration file.  |                     |
-| `-h`, `--help`       | Show help                                                                                                                                    |                     |
+| Short option | Long option    | Description                                                                                                                                  | Default Value       |
+|--------------|----------------|----------------------------------------------------------------------------------------------------------------------------------------------|---------------------|
+| `-c`         | `--config-dir` | Directory containing configuration files                                                                                                     | `/etc/files-backup` |
+| `-r`         | `--retention`  | Retention policy type. Possible values: daily, weekly, monthly, yearly. If set, the value will be used as a suffix in the subdirectory name. | `<empty>`           |
+| `-m`         | `--send-mail`  | Send an email notification after the backup is complete. If this flag is set, make sure to set the email address in the configuration file.  |                     |
+| `-h`         | `--help`       | Show help                                                                                                                                    |                     |
 
 ## Configuration
 
