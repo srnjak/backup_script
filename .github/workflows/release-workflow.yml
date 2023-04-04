@@ -47,7 +47,7 @@ jobs:
           builder.sh prepare -n "${{ env.PACKAGE_NAME }}"
       - name: Package
         run: |
-          builder.sh package -n "${{ env.PACKAGE_NAME }}"
+          builder.sh package -n "${{ env.PACKAGE_NAME }}" -o "${{ env.PACKAGE_NAME }}.deb
       - name: Deploy
         run: |
           builder.sh deploy \
