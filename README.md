@@ -1,6 +1,8 @@
 # File Backup Script
 
-A bash script for creating backups of files specified in a configuration file.
+This is a Bash script for creating backups of specified directories, using configuration files. The script takes in command-line arguments in the form of options and a configuration name, and creates a new backup directory with the specified retention policy (daily, weekly, monthly, yearly) if set.
+
+The script creates a new backup directory and backups each specified directory to a separate tar.bz2 file within the directory. It writes various log messages throughout the process, including the start and end time, the backup path, the backup size, and whether the backup creation was successful. Finally, it copies the log file to the backup directory and prints a message indicating that the backup creation is done.
 
 ## Usage
 
