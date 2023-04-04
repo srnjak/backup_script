@@ -40,6 +40,15 @@ Within this directory, each file specified in the configuration file will be bac
 
 A log file will be created in the temporary directory (`/tmp/backup.log`) and emailed to the address specified in the configuration file.
 
+## Dependencies
+The script uses the following dependencies:
+
+- `tar`
+- `bzip2`
+- `sendmail` (optional)
+
+Note: The script will work without `sendmail`, but won't be able to send mail after the backup process is done. `tar` and `bzip2` are required for compressing and archiving the backup files.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
