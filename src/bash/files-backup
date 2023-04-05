@@ -114,7 +114,7 @@ if [[ "$SEND_MAIL" == true ]]; then
   checkVariable EMAILTO
 
   # Check if sendmail is installed
-  if ! which sendmail > /dev/null; then
+  if ! which mail > /dev/null; then
     echo "Error: sendmail is not installed on this system."
     exit 1
   fi
@@ -147,6 +147,7 @@ write "Prefix       : $BACKUP_PREFIX"
 write "Script path  : $SCRIPT_PATH"
 write "Backup dir   : $BACKUP_DIR"
 write " "
+write "E-mail (from): $EMAILFROM"
 write "E-mail (to)  : $EMAILTO"
 write "***************************************\n"
 
@@ -198,8 +199,8 @@ SUMMARY="Backup $CONF_NAME ($HOST); size: $SIZE"
 
 if [[ "$SEND_MAIL" == true ]]; then
   # sending mail
-  sed -i "1s/^/Subject: $SUMMARY\n/" $LOG_FILE
-  sendmail "$EMAILTO" < $LOG_FILE
+  cat $LOG_FILE | mail -s "$SUMMARY" -a "From: $EMAILFROM" $EMAILTO
+
 fi
 
 rm $LOG_FILE
