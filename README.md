@@ -8,7 +8,7 @@ The script creates a new backup directory and backups each specified directory t
 
 Syntax:
 
-    files-backup [-c CONFIG_DIR][-r RETENTION_POLICY] CONF_NAME
+    files-backup [-c CONFIG_DIR][-r RETENTION_POLICY][-m] CONF_NAME
     files-backup -h
 
 * `CONF_NAME` - the name of the configuration file to be used for the backup. 
