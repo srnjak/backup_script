@@ -38,6 +38,7 @@ jobs:
       - name: Set up version
         run: |
           VERSION=$(version-updater.sh $(pwd) --release)
+          echo "version=$VERSION"
           git add .
           git commit -m "Release of version $VERSION"
           git tag "v$VERSION"
