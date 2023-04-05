@@ -44,6 +44,7 @@ jobs:
         run: |
           VERSION=$(version-updater.sh $(pwd) --new-preview)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "version=$VERSION"
       - name: Prepare
         run: |
           builder.sh clean
