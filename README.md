@@ -88,9 +88,9 @@ The script uses the following dependencies:
 
 - `tar`
 - `bzip2`
-- `sendmail` (optional)
+- `mailutils` (optional)
 
-Note: The script will work without `sendmail`, but won't be able to send mail after the backup process is done. `tar` and `bzip2` are required for compressing and archiving the backup files.
+Note: The script will work without `mailutils`, but won't be able to send mail after the backup process is done. `tar` and `bzip2` are required for compressing and archiving the backup files.
 
 ## License
 
