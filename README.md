@@ -29,6 +29,7 @@ Configuration files should be placed in the directory specified by the `-c` opti
 Each configuration file should have a `.cfg` extension and contain the following variables:
 
 * `ROOT` - root directory of the files to be backed up
+* `EMAILFROM` - email address from which backup summary should be sent
 * `EMAILTO` - email address where backup summary should be sent
 * `BACKUP_PREFIX` - prefix to be added to the backup directory name
 * `DIR` - directory where the backup should be stored
