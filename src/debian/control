@@ -5,7 +5,6 @@ Maintainer: {{maintainer}}
 Depends: tar, bzip2
 Suggests: mailutils
 Description: {{description}}
-
 Files:
-/usr/share/doc/files-backup/examples/system.cfg
-/usr/share/doc/files-backup/examples/system.exclude
+    /usr/share/doc/files-backup/examples/system.cfg
+    /usr/share/doc/files-backup/examples/system.exclude
