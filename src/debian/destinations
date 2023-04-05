@@ -1,1 +1,8 @@
-bash/backup.sh:usr/bin
+bash/files-backup:usr/bin
+
+# Configuration examples
+doc/examples/*:usr/share/doc/files-backup/examples
+
+# Debian specific
+debian/preinst:DEBIAN
+debian/postrm:DEBIAN

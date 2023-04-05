@@ -1,24 +1,27 @@
 # File Backup Script
 
-A bash script for creating backups of files specified in a configuration file.
+This is a Bash script for creating backups of specified directories, using configuration files. The script takes in command-line arguments in the form of options and a configuration name, and creates a new backup directory with the specified retention policy (daily, weekly, monthly, yearly) if set.
+
+The script creates a new backup directory and backups each specified directory to a separate tar.bz2 file within the directory. It writes various log messages throughout the process, including the start and end time, the backup path, the backup size, and whether the backup creation was successful. Finally, it copies the log file to the backup directory and prints a message indicating that the backup creation is done.
 
 ## Usage
 
 Syntax:
 
-    ./backup.sh [-c CONFIG_DIR][-r RETENTION_POLICY] CONF_NAME
-    ./backup.sh -h
+    files-backup [-c CONFIG_DIR][-r RETENTION_POLICY] CONF_NAME
+    files-backup -h
 
 * `CONF_NAME` - the name of the configuration file to be used for the backup. 
 This file should be located in the directory specified by `-c` option.
 
 ### Options
 
-| Option               | Description                                                                                                                                  | Default Value       |
-|----------------------|----------------------------------------------------------------------------------------------------------------------------------------------|---------------------|
-| `-c`, `--config-dir` | Directory containing configuration files                                                                                                     | `/etc/files-backup` |
-| `-r`, `--retention`  | Retention policy type. Possible values: daily, weekly, monthly, yearly. If set, the value will be used as a suffix in the subdirectory name. | `<empty>`           |
-| `-h`, `--help`       | Show help                                                                                                                                    | N/A                 |
+| Short option | Long option    | Description                                                                                                                                  | Default Value       |
+|--------------|----------------|----------------------------------------------------------------------------------------------------------------------------------------------|---------------------|
+| `-c`         | `--config-dir` | Directory containing configuration files                                                                                                     | `/etc/files-backup` |
+| `-r`         | `--retention`  | Retention policy type. Possible values: daily, weekly, monthly, yearly. If set, the value will be used as a suffix in the subdirectory name. | `<empty>`           |
+| `-m`         | `--send-mail`  | Send an email notification after the backup is complete. If this flag is set, make sure to set the email address in the configuration file.  |                     |
+| `-h`         | `--help`       | Show help                                                                                                                                    |                     |
 
 ## Configuration
 
@@ -38,6 +41,55 @@ The script will create a backup directory with a name in the format `BACKUP_PREF
 Within this directory, each file specified in the configuration file will be backed up as a compressed `.tar.bz2` file.
 
 A log file will be created in the temporary directory (`/tmp/backup.log`) and emailed to the address specified in the configuration file.
+
+## Installation
+
+### Add `srnjak` apt source
+
+To add the `srnjak` apt source to your system, follow these steps:
+
+1. Update the package index:
+    ```
+    sudo apt-get update
+    ```
+
+2. Install the required packages:
+    ```
+    sudo apt-get install -y ca-certificates gnupg2 curl
+    ```
+
+3. Add the `srnjak` repository to your system's package sources:
+    ```
+    echo "deb https://ci.srnjak.com/nexus/repository/apt-release release main" | sudo tee /etc/apt/sources.list.d/srnjak.list
+    ```
+
+4. Add the repository's GPG key to your system's trusted keys:
+    ```
+    curl -sSL https://ci.srnjak.com/nexus/repository/public/gpg/public.gpg.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/srnjak.gpg
+    ```
+
+### Install `files-backup`
+
+To install the `files-backup` package, follow these steps:
+
+1. Update the package index again:
+    ```
+    sudo apt-get update
+    ```
+
+2. Install the `files-backup` package:
+    ```
+    sudo apt-get install -y files-backup
+    ```
+
+## Dependencies
+The script uses the following dependencies:
+
+- `tar`
+- `bzip2`
+- `sendmail` (optional)
+
+Note: The script will work without `sendmail`, but won't be able to send mail after the backup process is done. `tar` and `bzip2` are required for compressing and archiving the backup files.
 
 ## License
 
