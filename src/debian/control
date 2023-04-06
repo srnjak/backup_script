@@ -3,5 +3,5 @@ Version: {{version}}
 Architecture: all
 Maintainer: {{maintainer}}
 Depends: tar, bzip2
-Suggests: mailutils
+Suggests: mailutils, purge-backups
 Description: {{description}}
