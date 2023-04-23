@@ -2,6 +2,6 @@ Package: {{package}}
 Version: {{version}}
 Architecture: all
 Maintainer: {{maintainer}}
-Depends: tar, bzip2
+Depends: tar, bzip2, cron
 Suggests: mailutils, purge-backups
 Description: {{description}}
