@@ -92,6 +92,12 @@ The script uses the following dependencies:
 
 Note: The script will work without `mailutils`, but won't be able to send mail after the backup process is done. `tar` and `bzip2` are required for compressing and archiving the backup files.
 
+## The scheduler script
+
+The files-backup-scheduler script is a designed for scheduling and automating regular backups based on specified frequency periods, including daily, weekly, monthly, and yearly backups.
+
+More information on how to use the `files-backup-scheduler` script can be found [here](doc/files-backup-scheduler.md).
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

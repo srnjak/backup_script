@@ -5,4 +5,5 @@ doc/examples/*:usr/share/doc/files-backup/examples
 
 # Debian specific
 debian/preinst:DEBIAN
+debian/postinst:DEBIAN
 debian/postrm:DEBIAN
