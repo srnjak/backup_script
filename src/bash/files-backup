@@ -195,7 +195,7 @@ write "*********************************"
 
 # sending mail
 HOST=$(hostname)
-SUMMARY="Backup $CONF_NAME ($HOST); size: $SIZE"
+SUMMARY="[files-backup] $CONF_NAME@$HOST ($SIZE)"
 
 if [[ "$SEND_MAIL" == true ]]; then
   # sending mail
