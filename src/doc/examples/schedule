@@ -1,0 +1,17 @@
+#The backup schedule configuration
+
+[daily]
+user-documents=no_mail
+website-html=no_mail
+
+[weekly]
+#user-documents=mail
+family-photos=mail
+
+[monthly]
+user-documents=mail
+website-html=mail
+
+[yearly]
+user-documents=mail
+family-photos=mail
