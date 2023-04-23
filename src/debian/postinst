@@ -2,10 +2,16 @@
 
 set -e
 
+SCHEDULER_SCRIPT="/usr/share/files-backup/files-backup-scheduler"
+CONFIG="/etc/files-backup/schedule"
+
 case "$1" in
     configure)
         # Add the cronjob to the current user's crontab
-        (crontab -l ; echo "0 2 * * * /usr/share/files-backup/files-backup-scheduler") | crontab -
+        (crontab -l ; echo "0 2 * * * $SCHEDULER_SCRIPT -r daily -c $CONFIG") | crontab -
+        (crontab -l ; echo "0 3 * * 0 $SCHEDULER_SCRIPT -r weekly -c $CONFIG") | crontab -
+        (crontab -l ; echo "0 4 1 * * $SCHEDULER_SCRIPT -r monthly -c $CONFIG") | crontab -
+        (crontab -l ; echo "0 5 1 1 * $SCHEDULER_SCRIPT -r yearly -c $CONFIG") | crontab -
         ;;
     *)
         # Do nothing on other actions
