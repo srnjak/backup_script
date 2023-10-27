@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Initialize variables with default values
+CONFIG_FILE=/etc/files-backup/_scheduler.cfg
+
 # Usage function
 usage() {
   cat <<EOF

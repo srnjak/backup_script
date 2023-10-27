@@ -1,6 +1,9 @@
 bash/files-backup:usr/bin
 bash/files-backup-scheduler:usr/share/files-backup
 
+# Configuration files
+etc/_schedule.cfg:etc/files-backup
+
 # Configuration examples
 doc/examples/*:usr/share/doc/files-backup/examples
 

@@ -1,17 +1,18 @@
 #!/bin/sh
 set -e
 
-config_dir="/etc/files-backup"
+SCHEDULER_SCRIPT="/usr/share/files-backup/files-backup-scheduler"
+CONFIG_DIR="/etc/files-backup"
 
 case "$1" in
     remove|deconfigure)
         # Remove /etc/files-backup directory if it is empty
-        if [ -d "$config_dir" ] && [ -z "$(ls -A $config_dir)" ]; then
-          rmdir $config_dir
+        if [ -d "$CONFIG_DIR" ] && [ -z "$(ls -A $CONFIG_DIR)" ]; then
+          rmdir $CONFIG_DIR
         fi
 
         # Remove the cronjob from the current user's crontab
-        (crontab -l | grep -v "/usr/share/files-backup/files-backup-scheduler" ) | crontab -
+        (crontab -l | grep -v $SCHEDULER_SCRIPT ) | crontab -
 
         ;;
     *)
