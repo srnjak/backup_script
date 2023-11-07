@@ -89,14 +89,46 @@ The script uses the following dependencies:
 - `tar`
 - `bzip2`
 - `mailutils` (optional)
+- `backup-scheduler`
 
 Note: The script will work without `mailutils`, but won't be able to send mail after the backup process is done. `tar` and `bzip2` are required for compressing and archiving the backup files.
 
-## The scheduler script
+## Automated Backups Configuration
 
-The files-backup-scheduler script is a designed for scheduling and automating regular backups based on specified frequency periods, including daily, weekly, monthly, and yearly backups.
+To automate your backups, store the configuration file at `/etc/files-backup/_schedule.cfg`. 
+This file sets the backup frequency and email notification preferences. 
+After configuring this file, backups will run automatically as scheduled.
 
-More information on how to use the `files-backup-scheduler` script can be found [here](doc/files-backup-scheduler.md).
+### Configuration File Format
+
+The INI-formatted file designates retention policies (daily, weekly, monthly, or yearly) with backup names and corresponding email notification settings.
+
+### Example Configuration:
+
+```ini
+# Backup scheduler configuration
+
+[daily]
+user-documents=no_mail
+website-html=no_mail
+
+[weekly]
+# user-documents=mail
+family-photos=mail
+
+[monthly]
+user-documents=mail
+website-html=mail
+
+[yearly]
+user-documents=mail
+family-photos=mail
+```
+
+### Execution
+
+Once configured, backups will execute automatically at specified intervals. 
+Place the configuration file at `/etc/files-backup/_schedule.cfg` and tailor it to your needs for efficient and personalized automated backups.
 
 ## License
 
