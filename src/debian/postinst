@@ -2,6 +2,7 @@
 
 set -e
 
+FILES_BACKUP_SCRIPT="files-backup"
 SCHEDULER_SCRIPT="backup-scheduler"
 CONFIG="/etc/files-backup/_schedule.cfg"
 
@@ -9,25 +10,25 @@ case "$1" in
     configure)
         # Add the cronjobs to the current user's crontab if not already present
         if ! crontab -l | grep -q "# Daily Backup - $SCHEDULER_SCRIPT"; then
-            (crontab -l 2>/dev/null || true; echo "0 2 * * * $SCHEDULER_SCRIPT -r daily -c $CONFIG # Files backup - Daily - DO NOT CHANGE!") | crontab -
+            (crontab -l 2>/dev/null || true; echo "0 2 * * * $SCHEDULER_SCRIPT -e $FILES_BACKUP_SCRIPT -r daily -c $CONFIG # Files backup - Daily - DO NOT CHANGE!") | crontab -
         else
             echo "Daily cronjob already exists. Skipping addition."
         fi
 
         if ! crontab -l | grep -q "# Weekly Backup - $SCHEDULER_SCRIPT"; then
-            (crontab -l 2>/dev/null || true; echo "0 3 * * 0 $SCHEDULER_SCRIPT -r weekly -c $CONFIG # Files backup - Weekly - DO NOT CHANGE!") | crontab -
+            (crontab -l 2>/dev/null || true; echo "0 3 * * 0 $SCHEDULER_SCRIPT -e $FILES_BACKUP_SCRIPT -r weekly -c $CONFIG # Files backup - Weekly - DO NOT CHANGE!") | crontab -
         else
             echo "Weekly cronjob already exists. Skipping addition."
         fi
 
         if ! crontab -l | grep -q "# Monthly Backup - $SCHEDULER_SCRIPT"; then
-            (crontab -l 2>/dev/null || true; echo "0 4 1 * * $SCHEDULER_SCRIPT -r monthly -c $CONFIG # Files backup - Monthly - DO NOT CHANGE!") | crontab -
+            (crontab -l 2>/dev/null || true; echo "0 4 1 * * $SCHEDULER_SCRIPT -e $FILES_BACKUP_SCRIPT -r monthly -c $CONFIG # Files backup - Monthly - DO NOT CHANGE!") | crontab -
         else
             echo "Monthly cronjob already exists. Skipping addition."
         fi
 
         if ! crontab -l | grep -q "# Yearly Backup - $SCHEDULER_SCRIPT"; then
-            (crontab -l 2>/dev/null || true; echo "0 5 1 1 * $SCHEDULER_SCRIPT -r yearly -c $CONFIG # Files backup - Yearly - DO NOT CHANGE!") | crontab -
+            (crontab -l 2>/dev/null || true; echo "0 5 1 1 * $SCHEDULER_SCRIPT -e $FILES_BACKUP_SCRIPT -r yearly -c $CONFIG # Files backup - Yearly - DO NOT CHANGE!") | crontab -
         else
             echo "Yearly cronjob already exists. Skipping addition."
         fi
