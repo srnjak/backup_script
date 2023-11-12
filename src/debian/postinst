@@ -32,6 +32,12 @@ case "$1" in
         else
             echo "Yearly cronjob already exists. Skipping addition."
         fi
+
+        # Enable the cron service
+        update-rc.d cron enable || true
+
+        # Restart the cron service (optional)
+        service cron restart || true
         ;;
     *)
         # Do nothing on other actions
