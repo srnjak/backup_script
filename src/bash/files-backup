@@ -136,8 +136,6 @@ BACKUP_DIR="$DIR/$BACKUP_SUBDIR"
 
 touch $LOG_FILE
 
-clear
-
 write "\n***************************************"
 write "BACKUP CREATION"
 write "***************************************"
