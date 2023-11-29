@@ -193,7 +193,7 @@ write "*********************************"
 
 # sending mail
 HOST=$(hostname)
-SUMMARY="[files-backup] $CONF_NAME@$HOST ($SIZE)"
+SUMMARY="[files-backup] $CONF_NAME@$HOST ($SIZE) $RETENTION_POLICY"
 
 if [[ "$SEND_MAIL" == true ]]; then
   # sending mail
