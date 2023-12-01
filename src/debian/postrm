@@ -1,14 +1,28 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
-config_dir="/etc/files-backup"
+SCHEDULER_SCRIPT="backup-scheduler"
+CONFIG_DIR="/etc/files-backup"
+CONFIG="$CONFIG_DIR/_schedule.cfg"
 
-if [ "$1" = "remove" ]; then
-  # Remove /etc/files-backup directory if it is empty
-  if [ -d "$config_dir" ] && [ -z "$(ls -A $config_dir)" ]; then
-    rmdir $config_dir
-  fi
-fi
+case "$1" in
+    remove|deconfigure)
+        # Remove /etc/files-backup directory if it is empty
+        if [ -d "$CONFIG_DIR" ] && [ -z "$(command ls -A "$CONFIG_DIR")" ]; then
+          rmdir "$CONFIG_DIR"
+        else
+          echo "Notice: The directory $CONFIG_DIR is not empty. It will not be deleted."
+        fi
+
+        # Remove the cronjob from the current user's crontab
+        (crontab -l | grep -v "$CONFIG # Files backup" ) | crontab -
+
+        ;;
+    *)
+        # Do nothing on other actions
+        exit 0
+        ;;
+esac
 
 # Continue with package removal
 exit 0

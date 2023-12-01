@@ -136,8 +136,6 @@ BACKUP_DIR="$DIR/$BACKUP_SUBDIR"
 
 touch $LOG_FILE
 
-clear
-
 write "\n***************************************"
 write "BACKUP CREATION"
 write "***************************************"
@@ -195,7 +193,7 @@ write "*********************************"
 
 # sending mail
 HOST=$(hostname)
-SUMMARY="Backup $CONF_NAME ($HOST); size: $SIZE"
+SUMMARY="[files-backup] $CONF_NAME@$HOST $RETENTION_POLICY ($SIZE)"
 
 if [[ "$SEND_MAIL" == true ]]; then
   # sending mail
