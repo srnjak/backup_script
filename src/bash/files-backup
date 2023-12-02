@@ -168,7 +168,7 @@ for i in "$ROOT"/*; do
   else
     tar -cjf "$BACKUP_DIR/$CURRENT_DIR.tar.bz2" "$i" > /dev/null 2>&1
   fi
-  write "OK ($(du -hs "$BACKUP_DIR/$CURRENT_DIR.tar.bz2" | awk '{print $1}'))"
+  write "\033[32mdone\033[0m ($(stat --printf="%s" "$BACKUP_DIR/$CURRENT_DIR.tar.bz2" | numfmt --to=iec))"
 
 done
 
