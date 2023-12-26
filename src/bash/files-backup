@@ -42,7 +42,13 @@ rm -f $LOG_FILE
 
 function write {
   echo -e "$1"
-  echo -e "$1" >> $LOG_FILE
+
+    no_color=$(echo -e "$1" | awk '{gsub(/\033\[[0-9;]*m/,"")}1')
+    if [[ $1 == *"\c" ]]; then
+      echo -ne "$no_color" >> $LOG_FILE
+    else
+      echo -e "$no_color" >> $LOG_FILE
+    fi
 }
 
 function log {
